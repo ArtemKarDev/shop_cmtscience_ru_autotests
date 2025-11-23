@@ -1,41 +1,69 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import pages.CartPage;
 import pages.CatalogPage;
+import pages.ProductPage;
 import pages.components.ProductCard;
+import pages.components.ProductModal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CatalogPageTests {
+public class CatalogPageTests extends TestBase{
 
     private CatalogPage catalogPage;
+    private ProductPage productPage;
+    private ProductModal productModal;
 
 
-    @Test
-    @DisplayName("Поиск товара по наименованию и проверка данных")
-    public void testFindProductByNameAndVerifyData(){}
+    @Test// @ParameterizedTest(value = "")
+    @Feature("Картоска товара с магазине")
+    @Story("Выбор продукта")
+    @Owner("KarlashovArtem")
+    @Severity(SeverityLevel.BLOCKER)
+    @Tag("smoke")
+    @DisplayName("Выбор товара по наименованию и проверка данных")
+    public void testFindProductByNameAndVerifyData(String productName, String price){
+        catalogPage.openCatalogPage()
+                .findProductCardByName(productName)
+                .checkProductPrice(price);
+    }
 
-    @Test
-    @DisplayName("Поиск товара по наименованию")
-    public void testFindProductByPartialName() {}
 
     @Test
     @DisplayName("Добавление нескольких товаров в корзину")
-    public void testAddMultipleProductsToBasket() {}
+    public void testAddMultipleProductsToBasket(String productName) {
+        catalogPage.openCatalogPage()
+                .findProductCardByName(productName)
+                .addToCart();
+        productModal.addFirstAvailableToCart();
+
+
+    }
 
     @Test
+    @Tag("smoke")
     @DisplayName("Переход на страницу товара из каталога")
-    public void testNavigateToProductPageFromCatalog() {}
+    public void testNavigateToProductPageFromCatalog(String productName) {
+        catalogPage.openCatalogPage()
+                .findProductCardByName(productName)
+                .goToProductPage();
+
+        productPage.checkProductTitle(productName);
+
+    }
 
     @Test
     @DisplayName("Добавление товара в корзину из каталога")
     public void testAddProductToBasketFromCatalog() {
 
-        String productName = "Samsung Galaxy S21";
-        CartPage basketPage = new CartPage(); // Предполагаем существование класса корзины
+        String productName = "Протеин";
+        CartPage cartPage = new CartPage(); // Предполагаем существование класса корзины
 
         ProductCard productCard = catalogPage.findProductCardByName(productName);
         String productPrice = productCard.getProductPrice();

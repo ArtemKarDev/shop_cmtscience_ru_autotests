@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.Tag;
 import pages.components.ProductCard;
 
 import static com.codeborne.selenide.Condition.text;

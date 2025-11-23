@@ -1,4 +1,4 @@
 package tests;
 
-public class RegistrationTests {
+public class RegistrationTests extends TestBase{
 }
