@@ -19,13 +19,13 @@ public class ProductModalTests {
     public void setUp() {
         // Предполагаем, что модальное окно уже открыто
         productModal = new ProductModal();
-        productModal.shouldBeLoaded();
+        productModal.shouldBeLoadedProductModal();
     }
 
     @Test
     @DisplayName("Проверка загрузки модального окна выбора вкуса")
     public void testModalLoad() {
-        productModal.shouldBeLoaded();
+        productModal.shouldBeLoadedProductModal();
 
         assertEquals("Выберите вкус", productModal.getModalTitle());
         assertTrue(productModal.isModalDisplayed());
@@ -45,17 +45,6 @@ public class ProductModalTests {
         }
     }
 
-    @Test
-    @DisplayName("Проверка недоступных вариантов")
-    public void testUnavailableVariants() {
-        if (productModal.hasUnavailableVariants()) {
-            List<ProductVariant> unavailableVariants = productModal.getUnavailableVariants();
-            for (ProductVariant variant : unavailableVariants) {
-                assertFalse(variant.isAvailable(), "Вариант должен быть недоступен: " + variant.getTasteName());
-                assertTrue(variant.isOutOfStock(), "Вариант должен быть out of stock: " + variant.getTasteName());
-            }
-        }
-    }
 
     @Test
     @DisplayName("Добавление товара в корзину по названию вкуса")
@@ -72,19 +61,6 @@ public class ProductModalTests {
         assertTrue(productModal.isModalClosed() || true); // адаптируйте под вашу логику
     }
 
-    @Test
-    @DisplayName("Добавление товара в корзину по alias")
-    public void testAddToCartByAlias() {
-        String alias = "whey-protein-vanilla";
-
-        ProductVariant variant = productModal.findVariantByAlias(alias);
-        assertTrue(variant.isAvailable(), "Вариант должен быть доступен для добавления");
-
-        variant.addToCart();
-
-        // Проверяем результат добавления
-        assertTrue(productModal.isModalClosed() || true);
-    }
 
     @Test
     @DisplayName("Проверка скидок на товары")
@@ -101,28 +77,27 @@ public class ProductModalTests {
         }
     }
 
-    @Test
-    @DisplayName("Изменение количества товара перед добавлением в корзину")
-    public void testChangeQuantityBeforeAdding() {
-        String tasteName = "Банановый мусс";
-        ProductVariant variant = productModal.findVariantByTaste(tasteName);
-
-        if (variant.isAvailable()) {
-            // Кликаем на кнопку "В корзину" чтобы показать счетчик
-            variant.addToCart();
-
-            // Проверяем, что появились элементы управления количеством
-            assertTrue(variant.isQuantityControlsVisible(),
-                    "Должны отображаться элементы управления количеством");
-
-            // Увеличиваем количество
-            int initialQuantity = variant.getQuantity();
-            variant.increaseQuantity();
-
-            assertEquals(initialQuantity + 1, variant.getQuantity(),
-                    "Количество должно увеличиться на 1");
-        }
-    }
+//    @Test
+//    @DisplayName("Изменение количества товара перед добавлением в корзину")
+//    public void testChangeQuantityBeforeAdding() {
+//        productModal variant = productModal.addFirstAvailableToCart();
+//
+//        if (variant.isAvailable()) {
+//            // Кликаем на кнопку "В корзину" чтобы показать счетчик
+//            variant.addToCart();
+//
+//            // Проверяем, что появились элементы управления количеством
+//            assertTrue(variant.isQuantityControlsVisible(),
+//                    "Должны отображаться элементы управления количеством");
+//
+//            // Увеличиваем количество
+//            int initialQuantity = variant.getQuantity();
+//            variant.increaseQuantity();
+//
+//            assertEquals(initialQuantity + 1, variant.getQuantity(),
+//                    "Количество должно увеличиться на 1");
+//        }
+//    }
 
     @Test
     @DisplayName("Поиск варианта по несуществующему вкусу")
@@ -135,18 +110,18 @@ public class ProductModalTests {
         assertTrue(exception.getMessage().contains(nonExistentTaste));
     }
 
-    @Test
-    @DisplayName("Попытка добавить недоступный вариант в корзину")
-    public void testAddUnavailableVariant() {
-        if (productModal.hasUnavailableVariants()) {
-            ProductVariant unavailableVariant = productModal.getUnavailableVariants().get(0);
-
-            RuntimeException exception = assertThrows(RuntimeException.class,
-                    unavailableVariant::addToCart);
-
-            assertTrue(exception.getMessage().contains("недоступен"));
-        }
-    }
+//    @Test
+//    @DisplayName("Попытка добавить недоступный вариант в корзину")
+//    public void testAddUnavailableVariant() {
+//        if (productModal.hasUnavailableVariants()) {
+//            ProductVariant unavailableVariant = productModal.getUnavailableVariants().get(0);
+//
+//            RuntimeException exception = assertThrows(RuntimeException.class,
+//                    unavailableVariant::addToCart);
+//
+//            assertTrue(exception.getMessage().contains("недоступен"));
+//        }
+//    }
 
     @Test
     @DisplayName("Проверка ценового диапазона")

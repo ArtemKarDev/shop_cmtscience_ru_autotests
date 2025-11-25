@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -12,7 +13,8 @@ import static org.openqa.selenium.By.xpath;
 
 public class CatalogPage {
 
-    private final ElementsCollection productCards = $$(".product-card");
+
+    private final ElementsCollection productCards = $$(".ml-buy-item");
     private final SelenideElement
 
     filterCheckBoxProtein = $(xpath("//div[@class='mr-filters']//span[text()='Протеин и батончики']")),
@@ -35,6 +37,18 @@ public class CatalogPage {
                 .filter(card -> productName.equals(card.getProductName()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Товар '" + productName + "' не найден"));
+    }
+
+    public ProductCard findProductCardByPartialName(String partialName) {
+        return productCards.stream()
+                .map(ProductCard::new)
+                .filter(card -> card.getProductName().contains(partialName))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Товар '" + partialName + "' не найден"));
+//                $$(".product-card__name")
+//                .filterBy(Condition.text(partialName))
+//                .first()
+//                .closest(".product-card");
     }
 
     @Step("Применить фильтр Протеин")

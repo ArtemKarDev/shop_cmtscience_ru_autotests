@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
@@ -21,8 +22,6 @@ public class TestBase {
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("version", "127.0");
         Configuration.browserSize = System.getProperty("windowSize", "1920x1080");
-
-
         Configuration.baseUrl = "https://cmtscience.ru";
         Configuration.pageLoadStrategy = "eager";
 
@@ -41,10 +40,13 @@ public class TestBase {
 
             System.out.println("=== Running on Jenkins with Selenoid ===");
         } else {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability("goog:chromeOptions", Map.of("args", new ArrayList<>()));
+            Configuration.browserCapabilities = capabilities;
             Configuration.remote = null;
+            Configuration.headless = false;
             System.out.println("=== Running locally (headless Chrome) ===");
         }
-
 
     }
 

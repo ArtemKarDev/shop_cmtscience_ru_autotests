@@ -2,6 +2,8 @@ package pages.components;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+import pages.CartPage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.webdriver;
@@ -87,4 +89,27 @@ public class HeaderContainer {
         return webdriver().object().getCurrentUrl();
     }
 
+
+    public CartPage openCart() {
+        basketLink.click();
+        return new CartPage();
+    }
+
+    public int getCartItemsCountFromHeader() {
+        return Integer.parseInt(basketItemCount.getText().trim());
+    }
+
+    public void waitForCartUpdate(int expectedCount) {
+        basketItemCount.shouldHave(Condition.exactText(String.valueOf(expectedCount)));
+    }
+
+    public boolean isCartEmpty() {
+        return basketItemCount.getText().trim().equals("0");
+    }
+
+    @Step("Проверка, что в корзине {count} товаров")
+    public boolean checkCountToCart(int count) {
+            return getCartItemsCountFromHeader() == count;
+
+    }
 }

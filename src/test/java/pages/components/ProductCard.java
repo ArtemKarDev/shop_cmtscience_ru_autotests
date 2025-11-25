@@ -1,10 +1,8 @@
 package pages.components;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -12,21 +10,28 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class ProductCard {
 
-    private final SelenideElement
-        productName = $(".product__desc-wrap a"),
-        basketButton = $(".to-basket-desktop"),
-        productPrice = $(".product__buy-wrap div span"),
-        productLink = $(".product__link");
+    private final SelenideElement rootElement,
+            productName,
+            addToCartButton,
+            productPrice,
+            productLink;
 
-    public ProductCard(SelenideElement cardElement) {}
+    public ProductCard(SelenideElement cardElement) {
+        this.rootElement = cardElement;
+        this.productName = rootElement.$(".product__desc-wrap a");
+        this.addToCartButton = rootElement.$(".to-basket-desktop");
+        this.productPrice = rootElement.$(".product__buy-wrap div span");
+        this.productLink = rootElement.$(".product__link");
+    }
 
-
+    @Step("Получить имя товара")
     public String getProductName() {
-        return productName
+        return rootElement
                 .shouldBe(Condition.visible)
                 .text();
     }
 
+    @Step("Получить цену товара")
     public String getProductPrice() {
         return productPrice
                 .shouldBe(Condition.visible)
@@ -35,14 +40,20 @@ public class ProductCard {
                 .trim();
     }
 
+    @Step("Перейти на страницу товара")
     public void goToProductPage() {
         productLink.click();
     }
 
-    @Step("Добавление карточки товара в корзину")
-    public ProductCard addToCart() {
-        this.basketButton.click();
-        return this;
+    @Step("Проверка кнопки Корзина")
+    public boolean isAddToCartEnabled() {
+        return addToCartButton.isEnabled();
+    }
+
+    @Step("Добавить товар в корзину")
+    public ProductModal clickAddToCart() {
+        this.addToCartButton.click();
+        return new ProductModal();
     }
     @Step("Проверка цены товара")
     public ProductCard checkProductPrice(String price) {
