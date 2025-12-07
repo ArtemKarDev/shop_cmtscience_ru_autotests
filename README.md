@@ -8,6 +8,8 @@
 ---
 
 *   <a href="#tools">Технологии и инструменты</a>
+*   <a href="#pattern">Патерны проектирования автотестов</a>
+*   <a href="#struct">Структура проекта</a>
 *   <a href="#cases">Реализованные проверки</a>
 *   <a href="#jenkins">Сборка в Jenkins</a>
 *   <a href="#console">Запуск тестов</a>
@@ -15,7 +17,6 @@
 *   <a href="#allure-testops">Интеграция с Allure TestOps</a>
 *   <a href="#jira">Интеграция с Jira</a>
 *   <a href="#telegram">Уведомления в Telegram</a>
-*   <a href="#video">Пример выполнения теста</a>
 
 ---
 
@@ -23,20 +24,22 @@
 ## 🛠 **Технологии и инструменты:**
 
 <p align="center">
-  <a href="https://www.jetbrains.com/idea/"><img src="images/logo/Intelij_IDEA.svg" width="50" height="50" alt="IDEA"/></a>
-  <a href="https://www.java.com/"><img src="images/logo/Java.svg" width="50" height="50" alt="Java"/></a>
-  <a href="https://github.com/"><img src="images/logo/Github.svg" width="50" height="50" alt="Github"/></a>
-  <a href="https://gradle.org/"><img src="images/logo/Gradle.svg" width="50" height="50" alt="Gradle"/></a>
-  <a href="https://junit.org/junit5/"><img src="images/logo/JUnit5.svg" width="50" height="50" alt="JUnit 5"/></a>
-  <a href="https://selenide.org/"><img src="images/logo/Selenide.svg" width="50" height="50" alt="Selenide"/></a>
-  <a href="https://aerokube.com/selenoid/"><img src="images/logo/Selenoid.svg" width="50" height="50" alt="Selenoid"/></a>
-  <a href="https://github.com/allure-framework/allure2"><img src="images/logo/Allure.svg" width="50" height="50" alt="Allure"/></a>
-  <a href="https://qameta.io/"><img src="images/logo/Allure2.svg" width="50" height="50" alt="Allure TestOps"/></a>
-  <a href="https://www.jenkins.io/"><img src="images/logo/Jenkins.svg" width="50" height="50" alt="Jenkins"/></a>
-  <a href="https://www.atlassian.com/ru/software/jira/"><img src="images/logo/Jira.svg" width="50" height="50" alt="Jira"/></a>
-  <a href="https://telegram.org/"><img src="images/logo/Telegram.svg" width="50" height="50" alt="Telegram"/></a>
+  <a href="https://www.jetbrains.com/idea/"><img width="6%" title="IntelliJ IDEA" src="media/logo/Intelij_IDEA.svg"></a>
+  <a href="https://www.java.com/"><img width="6%" title="Java" src="media/logo/Java.svg"></a>
+  <a href="https://github.com/"><img width="6%" title="GitHub" src="media/logo/GitHub.svg"></a>
+  <a href="https://gradle.org/"><img width="6%" title="Gradle" src="media/logo/Gradle.svg"></a>
+  <a href="https://junit.org/junit5/"><img width="6%" title="JUnit5" src="media/logo/JUnit5.svg"></a>
+  <a href="https://selenide.org/"><img width="6%" title="Selenide" src="media/logo/Selenide.svg"></a>
+  <a href="https://aerokube.com/selenoid/"><img width="6%" title="Selenoid" src="media/logo/Selenoid.svg"></a>
+  <a href="https://github.com/allure-framework/allure2"><img width="6%" title="Allure Report" src="media/logo/Allure_Report.svg"></a>
+  <a href="https://qameta.io/"><<img width="5%" title="Allure TestOps" src="media/logo/AllureTestOps.svg"></a>
+  <a href="https://www.jenkins.io/"><img width="6%" title="Jenkins" src="media/logo/Jenkins.svg"></a>
+  <a href="https://www.atlassian.com/ru/software/jira/"><img width="5%" title="Jira" src="media/logo/Jira.svg"></a>
+  <a href="https://telegram.org/"><img width="6%" title="Telegram" src="media/logo/Telegram.svg"></a>
 </p>
 
+<a id="pattern"></a>
+## 🛠 **Патерны проектирования автотестов**
 *В проекте используются паттерны **Page Object** и **Page Elements** для структурированности и чистоты кода.*
 
 ---
@@ -45,7 +48,7 @@
 ## ✅ **Реализованные проверки:**
 
 **Тестирование каталога (`/catalog`):**
-*   ✓ Проверка отображения и корректности работы фильтров (бренд, категория, цена)
+*   ✓ Проверка отображения и корректности работы фильтров 
 *   ✓ Проверка сортировки товаров (по цене, популярности, новизне)
 *   ✓ Проверка работы поиска в рамках каталога
 *   ✓ Проверка корректности отображения карточек товаров (наличие изображения, названия, цены, кнопки "В корзину")
@@ -90,7 +93,7 @@
 ### **Локальный запуск:**
 ```bash
 gradle clean test -DbaseUrl="https://cmtscience.ru"
-
+```
 
 ### **Удаленный запуск (с параметрами из Jenkins):**
 ```bash
@@ -100,12 +103,65 @@ gradle clean test
 -DbrowserSize=${browserSize}
 -DbaseUrl=${baseUrl}
 -DremoteUrl=${remoteUrl}
+```
+
+### Параметры сборки
+
+* <code>BROWSER_NAME</code> – браузер, в котором будут выполняться тесты. По-умолчанию - <code>chrome</code>.
+* <code>BROWSER_VERSION</code> – версия браузера, в которой будут выполняться тесты. По-умолчанию - <code>100.0</code>.
+* <code>BROWSER_SIZE</code> – размер окна браузера, в котором будут выполняться тесты.
+* <code>BASE_URL</code> – Url, по которому будет открываться тестируемое приложение. По-умолчанию - <code>1920x1080</code>.
+* <code>REMOTE_BROWSER_URL</code> – адрес удаленного сервера, на котором будут запускаться тесты.
+
+## <img src="media/logo/Jenkins.svg" title="Jenkins" width="4%"/> Сборка в Jenkins
+<p align="center">
+<img title="Jenkins Build" src="media/screens/JenkinsBuild.png">
+</p>
+
+## <img src="media/logo/Allure_Report.svg" title="Allure Report" width="4%"/> Пример Allure-отчета
+### Overview
+
+<p align="center">
+<img title="Allure Overview" src="media/screens/allureReport.png">
+</p>
+
+### Результат выполнения теста
+
+<p align="center">
+<img title="Test Results in Alure" src="media/screens/ResultTest.png">
+</p>
+
+## <img src="media/logo/AllureTestOps.svg" title="Allure TestOps" width="4%"/> Интеграция с Allure TestOps
+
+Выполнена интеграция сборки <code>Jenkins</code> с <code>Allure TestOps</code>.
+Результат выполнения автотестов отображается в <code>Allure TestOps</code>
+На Dashboard в <code>Allure TestOps</code> отображена статистика пройденных тестов.
+
+<p align="center">
+<img title="Allure TestOps DashBoard" src="media/screens/allureAutotestCloud.png">
+</p>
+
+## <img src="media/logo/Jira.svg" title="Jira" width="4%"/> Интеграция с Jira
+
+Реализована интеграция <code>Allure TestOps</code> с <code>Jira</code>, в тикете отображается информация, какие тест-кейсы были написаны в рамках задачи и результат их прогона.
+
+<p align="center">
+<img title="Jira Task" src="media/screens/jiraTask.png">
+</p>
+
+## <img width="4%" style="vertical-align:middle" title="Telegram" src="media/logo/Telegram.svg"> Уведомления в Telegram с использованием бота
+
+После завершения сборки, бот созданный в <code>Telegram</code>, автоматически обрабатывает и отправляет сообщение с результатом.
+
+<p align="center">
+<img width="70%" title="Telegram Notifications" src="media/screens/notification.png">
+</p>
 
 <a id="allure"></a>
 
 <img alt="Allure" height="25" src="images/logo/Allure.svg" width="25"/> Allure-отчет:
 <p align="center"> <img title="Allure Overview Dashboard" src="images/screen/allure_overview.png" width="850"> </p>
-Главная страница отчета:
+###Главная страница отчета:
 Overview: Общая статистика по прогону (графики, диаграммы).
 
 Suites: Группировка тестов по тестовым наборам.
