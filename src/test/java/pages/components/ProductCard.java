@@ -6,36 +6,34 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 
 public class ProductCard {
 
-    private final SelenideElement rootElement,
+    private final SelenideElement
             productName,
             addToCartButton,
             productPrice,
             productLink;
 
     public ProductCard(SelenideElement cardElement) {
-        this.rootElement = cardElement;
-        this.productName = rootElement.$(".product__desc-wrap a");
-        this.addToCartButton = rootElement.$(".to-basket-desktop");
-        this.productPrice = rootElement.$(".product__buy-wrap div span");
-        this.productLink = rootElement.$(".product__link");
+        this.productName = $(".product__desc-wrap a");
+        this.addToCartButton = $(".to-basket-desktop");
+        this.productPrice = $(".product__buy-wrap div span");
+        this.productLink = $(".product__link");
     }
 
 
     public String getProductName() {
-        return rootElement
+        return productName
                 .shouldBe(Condition.visible)
-                .text();
+                .getText();
     }
 
     @Step("Получить цену товара")
     public String getProductPrice() {
         return productPrice
                 .shouldBe(Condition.visible)
-                .text()
+                .getText()
                 .replaceAll("\\s+", "")
                 .trim();
     }
@@ -55,10 +53,13 @@ public class ProductCard {
         this.addToCartButton.click();
         return new ProductModal();
     }
+    @Step("Проверка имени товара")
+    public boolean checkProductName(String name) {
+        return productName.shouldHave(text(name)).getText().contains(name);
+    }
     @Step("Проверка цены товара")
-    public ProductCard checkProductPrice(String price) {
-        productPrice.shouldHave(text(price));
-        return this;
+    public boolean checkProductPrice(String price) {
+        return productPrice.shouldHave(text(price)).getText().contains(price);
     }
 
 

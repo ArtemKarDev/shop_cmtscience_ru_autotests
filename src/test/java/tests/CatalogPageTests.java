@@ -41,10 +41,9 @@ public class CatalogPageTests extends TestBase{
     @ParameterizedTest
     @CsvSource({
             "Протеин сывороточный 80% белка (60 порций), 1799",
-            "Креатин, 800",
-            "BCAA, 1200"
+            "Биотин витамин B7 (5000 мкг), 367",
     })
-    @Feature("Картоска товара с магазине")
+    @Feature("Карточка товара в магазине")
     @Story("Выбор продукта")
     @Owner("KarlashovArtem")
     @Severity(SeverityLevel.BLOCKER)
@@ -55,7 +54,6 @@ public class CatalogPageTests extends TestBase{
                 .findProductCardByName(productName)
                 .checkProductPrice(price);
     }
-
 
 
     @ParameterizedTest(name = "Товар с названием: {0}")
@@ -80,17 +78,17 @@ public class CatalogPageTests extends TestBase{
 
     }
 
-//    @Test
-//    @Tag("smoke")
-//    @DisplayName("Переход на страницу товара из каталога")
-//    public void testNavigateToProductPageFromCatalog(String productName) {
-//        catalogPage.openCatalogPage()
-//                .findProductCardByName(productName)
-//                .goToProductPage();
-//
-//        productPage.checkProductTitle(productName);
-//
-//    }
+    @Test
+    @Tag("smoke")
+    @DisplayName("Переход на страницу товара из каталога")
+    public void testNavigateToProductPageFromCatalog(String productName) {
+        catalogPage.openCatalogPage()
+                .findProductCardByName(productName)
+                .goToProductPage();
+
+        productPage.checkProductTitle(productName);
+
+    }
 //
 //    @Test
 //    @DisplayName("Добавление товара в корзину из каталога")

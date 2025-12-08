@@ -1,18 +1,17 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Tag;
 import pages.components.ProductCard;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.xpath;
 
 public class CatalogPage {
-
 
     private final ElementsCollection productCards = $$(".ml-buy-item");
     private final SelenideElement
@@ -27,10 +26,6 @@ public class CatalogPage {
         return this;
     }
 
-    public int countProductCarts() {
-        return productCards.size();
-    }
-
     @Step("Поиск товара по названию")
     public ProductCard findProductCardByName(String productName) {
         return productCards.stream()
@@ -41,16 +36,47 @@ public class CatalogPage {
     }
 
     @Step("Поиск товара по частичному названию")
-    public ProductCard findProductCardByPartialName(String partialName) {
+    public ProductCard findProductCardByPartialName(String name) {
         return productCards.stream()
                 .map(ProductCard::new)
-                .filter(card -> card.getProductName().contains(partialName))
+                .filter(card -> card.getProductName().contains(name))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Товар '" + partialName + "' не найден"));
-//                $$(".product-card__name")
-//                .filterBy(Condition.text(partialName))
-//                .first()
-//                .closest(".product-card");
+                .orElseThrow(() -> new RuntimeException("Товар '" + name + "' не найден"));
+    }
+
+    @Step("Поиск всех товаров по частичному названию")
+    public List<ProductCard> findAllProductByPartialName(String name) {
+        return productCards
+                .asFixedIterable()
+                .stream()
+                .map(ProductCard::new)
+                .filter(productCard -> productCard.getProductName().toLowerCase()
+                        .contains(name.toLowerCase()))
+                .toList();
+    }
+
+    public boolean isProductCardPresent(String productName) {
+        if (productCards.stream()
+                .map(ProductCard::new)
+                .anyMatch(card -> productName.equals(card.getProductName()))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isProductCardNotPresent(String productName) {
+        if (productCards.stream()
+                .map(ProductCard::new)
+                .anyMatch(card -> productName.equals(card.getProductName()))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public int getProductCardCount() {
+        return productCards.size();
     }
 
     @Step("Применить фильтр Протеин")

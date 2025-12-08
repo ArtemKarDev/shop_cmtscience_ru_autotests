@@ -12,7 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TestBase {
 
@@ -58,6 +58,13 @@ public class TestBase {
     @AfterEach
     void closeUp() {
         closeWebDriver();
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Очистка cookies после каждого теста
+        clearBrowserCookies();
+        clearBrowserLocalStorage();
     }
 
     @AfterEach

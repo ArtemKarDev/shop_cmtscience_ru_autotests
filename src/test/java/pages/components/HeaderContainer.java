@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.CartPage;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static org.assertj.core.error.ShouldBeVisible.shouldBeVisible;
@@ -29,9 +30,10 @@ public class HeaderContainer {
     private final SelenideElement coursesMenu = $("a[href='/courses']");
     private final SelenideElement catalogMenu = $("a[href='/catalog']");
     private final SelenideElement aboutMenu = $("a[href='/about']");
+    private final SelenideElement loginMenu = $(".hr-dd");
 
     public HeaderContainer shouldBeVisible() {
-        headerContainer.shouldBe(Condition.visible);
+        headerContainer.shouldBe(visible);
         return this;
     }
 
@@ -103,6 +105,18 @@ public class HeaderContainer {
         basketItemCount.shouldHave(Condition.exactText(String.valueOf(expectedCount)));
     }
 
+    @Step("Проверить, что пользователь не авторизован")
+    public void verifyUserNotLoggedIn() {
+        loginButton.shouldBe(visible);
+        loginMenu.shouldNotBe(visible);
+    }
+    @Step("Проверить, что пользователь  авторизован")
+    public void verifyUserLoggedIn() {
+        loginButton.shouldBe(visible);
+        loginMenu.shouldBe(visible);
+    }
+
+
     public boolean isCartEmpty() {
         return basketItemCount.getText().trim().equals("0");
     }
@@ -112,4 +126,6 @@ public class HeaderContainer {
             return getCartItemsCountFromHeader() == count;
 
     }
+
+
 }
