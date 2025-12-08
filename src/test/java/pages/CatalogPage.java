@@ -31,6 +31,7 @@ public class CatalogPage {
         return productCards.size();
     }
 
+    @Step("Поиск товара по названию")
     public ProductCard findProductCardByName(String productName) {
         return productCards.stream()
                 .map(ProductCard::new)
@@ -39,6 +40,7 @@ public class CatalogPage {
                 .orElseThrow(() -> new RuntimeException("Товар '" + productName + "' не найден"));
     }
 
+    @Step("Поиск товара по частичному названию")
     public ProductCard findProductCardByPartialName(String partialName) {
         return productCards.stream()
                 .map(ProductCard::new)

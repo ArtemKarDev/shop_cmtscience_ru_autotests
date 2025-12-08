@@ -24,7 +24,7 @@ public class ProductCard {
         this.productLink = rootElement.$(".product__link");
     }
 
-    @Step("Получить имя товара")
+
     public String getProductName() {
         return rootElement
                 .shouldBe(Condition.visible)

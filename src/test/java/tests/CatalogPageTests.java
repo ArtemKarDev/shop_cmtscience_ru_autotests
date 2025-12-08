@@ -40,7 +40,7 @@ public class CatalogPageTests extends TestBase{
 
     @ParameterizedTest
     @CsvSource({
-            "Протеин, 1500",
+            "Протеин сывороточный 80% белка (60 порций), 1799",
             "Креатин, 800",
             "BCAA, 1200"
     })
@@ -60,6 +60,7 @@ public class CatalogPageTests extends TestBase{
 
     @ParameterizedTest(name = "Товар с названием: {0}")
     @ValueSource(strings = {"Протеин", "Креатин"})
+    @Tag("smoke")
     @DisplayName("Добавление {} в корзину через модальное окно выбора вкуса")
     public void testAddMultipleProductsToBasket(String partialProductName) {
 
