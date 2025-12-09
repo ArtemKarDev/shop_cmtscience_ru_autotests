@@ -2,6 +2,7 @@ package pages.components;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import pages.ProductPage;
 
 import java.time.Duration;
 
@@ -57,8 +58,9 @@ public class ProductCard {
     }
 
     @Step("Перейти на страницу товара")
-    public void goToProductPage() {
+    public ProductPage goToProductPage() {
         getLinkElement().click();
+        return new ProductPage();
     }
 
     @Step("Проверка кнопки Корзина")

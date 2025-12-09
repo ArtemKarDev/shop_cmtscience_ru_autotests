@@ -102,15 +102,15 @@ public class CatalogPageTests extends TestBase{
 
     }
 
-    @Test
+    @ParameterizedTest
     @Tag("smoke")
+    @ValueSource(strings = {"Рыбный жир Омега-3 900 мг"})
     @DisplayName("Переход на страницу товара из каталога")
     public void testNavigateToProductPageFromCatalog(String productName) {
         catalogPage.openCatalogPage()
                 .findProductCardByPartialName(productName)
-                .goToProductPage();
-
-        productPage.checkProductTitle(productName);
+                .goToProductPage()
+                .checkProductTitle(productName);
 
     }
 
