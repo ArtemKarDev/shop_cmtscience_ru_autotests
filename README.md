@@ -169,5 +169,5 @@ Suites: Группировка тестов по тестовым наборам
 
 Behaviors: Группировка по функциональным блокам (Epic, Feature, Story).
 
-<p align="center"> <img title="Allure Tests" src="images/screen/allureResults.png" width="850"> </p>
+<p align="center"> <img title="Allure Tests" src="media/screens/allureResults.png" width="850"> </p>
 
