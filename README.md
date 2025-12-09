@@ -159,8 +159,8 @@ gradle clean test
 
 <a id="allure"></a>
 
-<img alt="Allure" height="25" src="images/logo/Allure.svg" width="25"/> Allure-отчет:
-<p align="center"> <img title="Allure Overview Dashboard" src="images/screen/allure_overview.png" width="850"> </p>
+<img alt="Allure" height="25" src="media/logo/Allure_Report.svg" width="25"/> Allure-отчет:
+<p align="center"> <img title="Allure Overview Dashboard" src="media/screen/allure.png" width="850"> </p>
 
 ### Главная страница отчета:
 Overview: Общая статистика по прогону (графики, диаграммы).
