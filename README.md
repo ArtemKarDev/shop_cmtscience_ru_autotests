@@ -156,18 +156,3 @@ gradle clean test
 <p align="center">
 <img width="70%" title="Telegram Notifications" src="media/screens/Bot.png">
 </p>
-
-<a id="allure"></a>
-
-<img alt="Allure" height="25" src="media/logo/Allure_Report.svg" width="25"/> Allure-отчет:
-<p align="center"> <img title="Allure Overview Dashboard" src="media/screen/allure.png" width="850"> </p>
-
-### Главная страница отчета:
-Overview: Общая статистика по прогону (графики, диаграммы).
-
-Suites: Группировка тестов по тестовым наборам.
-
-Behaviors: Группировка по функциональным блокам (Epic, Feature, Story).
-
-<p align="center"> <img title="Allure Tests" src="media/screens/allureResults.png" width="850"> </p>
-
