@@ -9,8 +9,6 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class ProductModal {
 
-
-    // Основные элементы модального окна
     private final SelenideElement
             modalContainer = $(".container--modal"),
             modalTitle = $("#mfp-product-title"),
@@ -20,8 +18,6 @@ public class ProductModal {
     private final ElementsCollection desktopTableRows = $$("#to-basket-popup-table .tr-bot-items");
 
 
-
-    // Методы проверки загрузки модального окна
     public ProductModal shouldBeLoadedProductModal() {
         modalContainer.shouldBe(Condition.visible);
         modalTitle.shouldBe(Condition.visible);
@@ -61,7 +57,6 @@ public class ProductModal {
         modalCloseButton.click();
     }
 
-    // Методы добавления в корзину
     public void addToCartByTaste(String tasteName) {
         ProductVariant variant = findVariantByTaste(tasteName);
         variant.addToCart();
@@ -75,7 +70,6 @@ public class ProductModal {
         return availableVariant;
     }
 
-    // Методы проверки состояний
     public boolean hasAvailableVariants() {
         return !getAvailableVariants().isEmpty();
     }
@@ -88,7 +82,7 @@ public class ProductModal {
         return getAvailableVariants().size();
     }
 
-    // Методы работы с ценами
+
     public List<Double> getAllPrices() {
         return getAllVariants().stream()
                 .map(ProductVariant::getCurrentPrice)
@@ -107,7 +101,6 @@ public class ProductModal {
                 .orElse(0.0);
     }
 
-    // Вспомогательные методы
     public void waitForModalToClose() {
         modalContainer.should(Condition.disappear);
     }

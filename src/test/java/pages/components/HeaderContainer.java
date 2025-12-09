@@ -8,7 +8,6 @@ import pages.CartPage;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.webdriver;
-import static org.assertj.core.error.ShouldBeVisible.shouldBeVisible;
 
 public class HeaderContainer {
     private final SelenideElement headerContainer = $(".m-header__container");

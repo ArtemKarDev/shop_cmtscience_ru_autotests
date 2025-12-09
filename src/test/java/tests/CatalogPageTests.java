@@ -1,6 +1,5 @@
 package tests;
 
-import com.codeborne.selenide.Condition;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +17,6 @@ import pages.components.*;
 
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CatalogPageTests extends TestBase{
 
@@ -69,7 +63,6 @@ public class CatalogPageTests extends TestBase{
 
     @ParameterizedTest(name = "Товар с названием: {0}")
     @ValueSource(strings = {"Биотин", "Креатин", "Протеин"})
-//    @ValueSource(strings = {"Протеин"})
     @Tag("smoke")
     @DisplayName("Добавление {} в корзину через модальное окно выбора вкуса")
     public void testAddMultipleProductsToBasket(String partialProductName) {

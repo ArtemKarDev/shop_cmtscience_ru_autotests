@@ -1,6 +1,5 @@
 package pages.components;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -8,13 +7,11 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
 
 public class ProductCard {
 
     private final SelenideElement cardElement;
 
-    // Конструктор теперь только сохраняет элемент
     public ProductCard(SelenideElement cardElement) {
         this.cardElement = cardElement;
     }
@@ -35,19 +32,6 @@ public class ProductCard {
     private SelenideElement getLinkElement() {
         return cardElement.$(".product__link");
     }
-
-//    private final SelenideElement
-//            productName,
-//            addToCartButton,
-//            productPrice,
-//            productLink;
-//
-//    public ProductCard(SelenideElement cardElement) {
-//        this.productName = $(".product__desc-wrap a");
-//        this.addToCartButton = $(".to-basket-desktop");
-//        this.productPrice = $(".product__buy-wrap div span");
-//        this.productLink = $(".product__link");
-//    }
 
 
     public String getProductName() {
@@ -93,7 +77,7 @@ public class ProductCard {
     }
     @Step("Проверка цены товара")
     public boolean checkProductPrice(String price) {
-        return getPriceElement().shouldHave(text(price)).getText().contains(price);
+        return getPriceElement().getText().replaceAll("[^0-9]", "").contains(price);
     }
 
 

@@ -55,13 +55,7 @@ public class CatalogPage {
             return card;
         }
     }
-//        ProductCard card = productCards.stream()
-//                .map(ProductCard::new)
-//                .filter(card1 -> card1.getProductName().contains(name))
-//                .findFirst()
-//                .orElseThrow(() -> new RuntimeException("Товар '" + name + "' не найден"));
-//        scrollToElement(card.getProductCardElement().scrollIntoView(true));
-//        return card;
+
         throw new RuntimeException("Товар содержащий '" + partialName + "' не найден. " +
                 "Всего товаров на странице: " + getProductCardElements().size());
     }
