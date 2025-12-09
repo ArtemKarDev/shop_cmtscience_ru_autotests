@@ -138,7 +138,7 @@ gradle clean test
 На Dashboard в <code>Allure TestOps</code> отображена статистика пройденных тестов.
 
 <p align="center">
-<img title="Allure TestOps DashBoard" src="media/screens/allureAutotestCloud.png">
+<img title="Allure TestOps DashBoard" src="media/screens/AllureTestOps.png">
 </p>
 
 ## <img src="media/logo/Jira.svg" title="Jira" width="4%"/> Интеграция с Jira
@@ -146,7 +146,7 @@ gradle clean test
 Реализована интеграция <code>Allure TestOps</code> с <code>Jira</code>, в тикете отображается информация, какие тест-кейсы были написаны в рамках задачи и результат их прогона.
 
 <p align="center">
-<img title="Jira Task" src="media/screens/jiraTask.png">
+<img title="Jira Task" src="media/screens/Jira.png">
 </p>
 
 ## <img width="4%" style="vertical-align:middle" title="Telegram" src="media/logo/Telegram.svg"> Уведомления в Telegram с использованием бота
@@ -154,7 +154,7 @@ gradle clean test
 После завершения сборки, бот созданный в <code>Telegram</code>, автоматически обрабатывает и отправляет сообщение с результатом.
 
 <p align="center">
-<img width="70%" title="Telegram Notifications" src="media/screens/notification.png">
+<img width="70%" title="Telegram Notifications" src="media/screens/Bot.png">
 </p>
 
 <a id="allure"></a>
