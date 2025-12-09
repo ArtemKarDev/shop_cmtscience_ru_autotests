@@ -6,18 +6,30 @@ import io.qameta.allure.Step;
 import pages.components.ProductCard;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.xpath;
 
 public class CatalogPage {
 
-    private final ElementsCollection productCards = $$(".ml-buy-item");
-    private final SelenideElement
+    private ElementsCollection getProductCardElements() {
+        return $$(".ml-buy-item").filter(visible);
+    }
 
+    private List<ProductCard> getProductCards() {
+        return getProductCardElements()
+                .asFixedIterable()
+                .stream()
+                .map(ProductCard::new)
+                .collect(Collectors.toList());
+    }
+    private final SelenideElement
     filterCheckBoxProtein = $(xpath("//div[@class='mr-filters']//span[text()='Протеин и батончики']")),
     filterCheckBoxOmega = $(xpath("//div[@class='mr-filters']//span[text()='Омега-3']"));
+
 
     @Step("Открыть страницу Магазин")
     public CatalogPage openCatalogPage() {
@@ -26,73 +38,88 @@ public class CatalogPage {
         return this;
     }
 
-    @Step("Поиск товара по названию")
-    public ProductCard findProductCardByName(String productName) {
-        return productCards.stream()
-                .map(ProductCard::new)
-                .filter(card -> productName.equals(card.getProductName()))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Товар '" + productName + "' не найден"));
-    }
 
     @Step("Поиск товара по частичному названию")
-    public ProductCard findProductCardByPartialName(String name) {
-        return productCards.stream()
-                .map(ProductCard::new)
-                .filter(card -> card.getProductName().contains(name))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Товар '" + name + "' не найден"));
+    public ProductCard findProductCardByPartialName(String partialName) {
+
+        System.out.println("Ищем товар содержащий: '" + partialName + "'");
+        System.out.println("Всего товаров на странице: " + getProductCards().size());
+
+        for (ProductCard card : getProductCards()) {
+            String productName = card.getProductName();
+            System.out.println("Проверяем: '" + productName + "' содержит '" + partialName + "'?");
+
+        if (productName.contains(partialName)) {
+            System.out.println("НАЙДЕН: " + productName);
+            scrollToProductCard(card);
+            return card;
+        }
+    }
+//        ProductCard card = productCards.stream()
+//                .map(ProductCard::new)
+//                .filter(card1 -> card1.getProductName().contains(name))
+//                .findFirst()
+//                .orElseThrow(() -> new RuntimeException("Товар '" + name + "' не найден"));
+//        scrollToElement(card.getProductCardElement().scrollIntoView(true));
+//        return card;
+        throw new RuntimeException("Товар содержащий '" + partialName + "' не найден. " +
+                "Всего товаров на странице: " + getProductCardElements().size());
     }
     @Step("Скроллить до элемента")
-    public CatalogPage scrollToElement(SelenideElement element) {
-        element.scrollIntoView("{behavior: 'smooth', block: 'center'}");
+    public CatalogPage scrollToProductCard(ProductCard card) {
+        executeJavaScript(
+                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});",
+                card.getCardElement()
+        );
         sleep(300); // Небольшая пауза для стабилизации
         return this;
     }
 
+    @Step("Скроллить вниз")
+    private void scrollDown() {
+        executeJavaScript("window.scrollBy(0, 800);");
+    }
+
     @Step("Поиск всех товаров по частичному названию")
-    public List<ProductCard> findAllProductByPartialName(String name) {
-        return productCards
-                .asFixedIterable()
+    public List<ProductCard> findAllProductsByPartialName(String partialName) {
+
+        return getProductCards()
                 .stream()
-                .map(ProductCard::new)
-                .filter(productCard -> productCard.getProductName().toLowerCase()
-                        .contains(name.toLowerCase()))
-                .toList();
+                .filter(card -> card.getProductName().contains(partialName))
+                .collect(Collectors.toList());
     }
 
-    public boolean isProductCardPresent(String productName) {
-        if (productCards.stream()
-                .map(ProductCard::new)
-                .anyMatch(card -> productName.equals(card.getProductName()))) {
-            return true;
-        } else {
-            return false;
+    @Step("Проверить, что товар с названием '{productName}' отображается")
+    public CatalogPage verifyProductIsVisible(String productName) {
+        boolean found = getProductCards().stream()
+                .anyMatch(card -> {
+                    String cardName = card.getProductName();
+                    if (cardName.contains(productName)) {
+                        scrollToProductCard(card);
+                        card.getCardElement().shouldBe(visible.because("Ожидалось, что товар "+productName+" будет виден"));
+                        return true;
+                    }
+                    return false;
+                });
+
+        if (!found) {
+            throw new AssertionError("Товар с названием '" + productName + "' не найден среди видимых элементов.");
         }
+        return this;
     }
 
-    public boolean isProductCardNotPresent(String productName) {
-        if (productCards.stream()
-                .map(ProductCard::new)
-                .anyMatch(card -> productName.equals(card.getProductName()))) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
-    public int getProductCardCount() {
-        return productCards.size();
-    }
 
     @Step("Применить фильтр Протеин")
-    public void applyFilterProtein() {
+    public CatalogPage applyFilterProtein() {
         filterCheckBoxProtein.click();
+        return this;
     }
 
     @Step("Применить фильтр Омега")
-    public void applyFilterOmega() {
+    public CatalogPage applyFilterOmega() {
         filterCheckBoxOmega.click();
+        return this;
     }
 
 

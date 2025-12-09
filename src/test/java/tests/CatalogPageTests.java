@@ -7,12 +7,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.CartPage;
 import pages.CatalogPage;
 import pages.ProductPage;
 import pages.components.*;
+
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -36,7 +41,13 @@ public class CatalogPageTests extends TestBase{
         footer = new FooterContainer();
     }
 
-
+    record ProductFilterTestParams(String productName, Consumer<CatalogPage> filterAction) {}
+    static Stream<Arguments> provideProductsAndFilters() {
+        return Stream.of(
+                Arguments.of(new ProductFilterTestParams("Протеин", CatalogPage::applyFilterProtein)),
+                Arguments.of(new ProductFilterTestParams("Омега", CatalogPage::applyFilterOmega))
+        );
+    }
 
     @ParameterizedTest
     @CsvSource({
@@ -51,20 +62,21 @@ public class CatalogPageTests extends TestBase{
     @DisplayName("Выбор товара по наименованию и проверка данных")
     public void testFindProductByNameAndVerifyData(String productName, String price){
         catalogPage.openCatalogPage()
-                .findProductCardByName(productName)
+                .findProductCardByPartialName(productName)
                 .checkProductPrice(price);
     }
 
 
     @ParameterizedTest(name = "Товар с названием: {0}")
-    @ValueSource(strings = {"Биотин", "Креатин"})
+    @ValueSource(strings = {"Биотин", "Креатин", "Протеин"})
+//    @ValueSource(strings = {"Протеин"})
     @Tag("smoke")
     @DisplayName("Добавление {} в корзину через модальное окно выбора вкуса")
     public void testAddMultipleProductsToBasket(String partialProductName) {
-        System.out.println(catalogPage.findAllProductByPartialName(partialProductName).size());
-        ProductCard card = catalogPage.openCatalogPage()
+        catalogPage = catalogPage.openCatalogPage();
+
+        ProductCard card = catalogPage
                 .findProductCardByPartialName(partialProductName);
-        catalogPage.scrollToElement(card.getProductCardElement());
 
         ProductModal modal = card
                 .clickAddToCart()
@@ -81,49 +93,34 @@ public class CatalogPageTests extends TestBase{
 
     }
 
+    @ParameterizedTest(name = "Товар с названием: {0}")
+    @MethodSource("provideProductsAndFilters")
+    @Tag("smoke")
+    @DisplayName("Проверка наличия товаров в каталоге с фильром")
+    public void testFindProductWithFilter(ProductFilterTestParams params) {
+        catalogPage = catalogPage
+                .openCatalogPage();
+        params.filterAction.accept(catalogPage);
+
+        ProductCard card = catalogPage
+                .findProductCardByPartialName(params.productName());
+
+        catalogPage.verifyProductIsVisible(card.getProductName());
+
+    }
+
     @Test
     @Tag("smoke")
     @DisplayName("Переход на страницу товара из каталога")
     public void testNavigateToProductPageFromCatalog(String productName) {
         catalogPage.openCatalogPage()
-                .findProductCardByName(productName)
+                .findProductCardByPartialName(productName)
                 .goToProductPage();
 
         productPage.checkProductTitle(productName);
 
     }
-//
-//    @Test
-//    @DisplayName("Добавление товара в корзину из каталога")
-//    public void testAddProductToBasketFromCatalog() {
-//
-//        String productName = "Протеин";
-//        CartPage cartPage = new CartPage(); // Предполагаем существование класса корзины
-//
-//        ProductCard productCard = catalogPage.findProductCardByName(productName);
-//        String productPrice = productCard.getProductPrice();
-//        productCard.clickAddToCart();
-//
-//        assertTrue(cartPage.isProductInBasket(productName),
-//                "Товар должен быть добавлен в корзину");
-//        assertEquals(productPrice, basketPage.getProductPriceInBasket(productName),
-//                "Цена товара в корзине должна совпадать с ценой в каталоге");
-//    }
-//
-//    @Test
-//    @DisplayName("Проверка количества товаров в корзине")
-//    public void testBasketItemsCount() {
-//        int itemsCount = header.getBasketItemsCount();
-//        assertTrue(itemsCount >= 0, "Количество товаров в корзине не может быть отрицательным");
-//
-//        if (itemsCount > 0) {
-//            assertFalse(header.isBasketEmpty(), "Корзина не должна быть пустой");
-//        }
-//    }
-//
-//
-//    @Test
-//    @DisplayName("Проверка наличия товаров в каталоге с фильром")
-//    public void testCatalogNotEmptyAndBasicStructure() {}
+
+
 
 }
