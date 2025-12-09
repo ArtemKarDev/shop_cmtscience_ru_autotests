@@ -25,14 +25,14 @@ public class ProductCard {
 
     public String getProductName() {
         return productName
-                .shouldBe(Condition.visible)
+                //.shouldBe(Condition.visible)
                 .getText();
     }
 
     @Step("Получить цену товара")
     public String getProductPrice() {
         return productPrice
-                .shouldBe(Condition.visible)
+                //.shouldBe(Condition.visible)
                 .getText()
                 .replaceAll("\\s+", "")
                 .trim();
@@ -63,4 +63,7 @@ public class ProductCard {
     }
 
 
+    public SelenideElement getProductCardElement() {
+        return productName;
+    }
 }

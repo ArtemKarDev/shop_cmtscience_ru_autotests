@@ -43,6 +43,12 @@ public class CatalogPage {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Товар '" + name + "' не найден"));
     }
+    @Step("Скроллить до элемента")
+    public CatalogPage scrollToElement(SelenideElement element) {
+        element.scrollIntoView("{behavior: 'smooth', block: 'center'}");
+        sleep(300); // Небольшая пауза для стабилизации
+        return this;
+    }
 
     @Step("Поиск всех товаров по частичному названию")
     public List<ProductCard> findAllProductByPartialName(String name) {

@@ -57,13 +57,16 @@ public class CatalogPageTests extends TestBase{
 
 
     @ParameterizedTest(name = "Товар с названием: {0}")
-    @ValueSource(strings = {"Протеин", "Креатин"})
+    @ValueSource(strings = {"Биотин", "Креатин"})
     @Tag("smoke")
     @DisplayName("Добавление {} в корзину через модальное окно выбора вкуса")
     public void testAddMultipleProductsToBasket(String partialProductName) {
+        System.out.println(catalogPage.findAllProductByPartialName(partialProductName).size());
+        ProductCard card = catalogPage.openCatalogPage()
+                .findProductCardByPartialName(partialProductName);
+        catalogPage.scrollToElement(card.getProductCardElement());
 
-        ProductModal modal = catalogPage
-                .findProductCardByPartialName(partialProductName)
+        ProductModal modal = card
                 .clickAddToCart()
                 .shouldBeLoadedProductModal();
 

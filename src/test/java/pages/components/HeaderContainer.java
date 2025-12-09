@@ -69,7 +69,7 @@ public class HeaderContainer {
         aboutMenu.click();
     }
 
-    public void openLogin() {
+    public void clickLoginButton() {
         loginButton.click();
     }
 

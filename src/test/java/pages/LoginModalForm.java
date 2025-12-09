@@ -8,16 +8,16 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
 
 public class LoginModalForm {
-    private final SelenideElement
-            modalForm = $(".container--modal"),
-            modalTittle = $(".title-tiny"),
-            emailField = $(".email"),
-            passwordField = $(".password"),
-            submitButton = $(".btn__def"),
-            closeButton = $(".mfp-close"),
-            helpBlock = $(".help-block"),
-            buttonResetPassword = $("a[href='https://cmtscience.ru/password/reset']"),
-            buttonGoToRegister = $("a[href='https://cmtscience.ru/register']");
+    public final SelenideElement
+            modalForm = $(".container--modal");
+    private final SelenideElement modalTittle = $(".title-tiny");
+    private final SelenideElement emailField = $(".email");
+    private final SelenideElement passwordField = $(".password");
+    private final SelenideElement submitButton = $(".btn__def");
+    private final SelenideElement closeButton = $(".mfp-close");
+    private final SelenideElement helpBlock = $(".help-block");
+    private final SelenideElement buttonResetPassword = $("a[href='https://cmtscience.ru/password/reset']");
+    private final SelenideElement buttonGoToRegister = $("a[href='https://cmtscience.ru/register']");
 
     @Step("Проверить видимость модального окна логина")
     public LoginModalForm shouldBeVisible() {
@@ -29,9 +29,8 @@ public class LoginModalForm {
     }
 
     @Step("Проверить, что модальное окно закрыто")
-    public LoginModalForm shouldBeHidden() {
-        modalForm.shouldNotBe(visible);
-        return this;
+    public boolean shouldBeHidden() {
+        return modalForm.shouldNotBe(visible).is(hidden);
     }
 
     @Step("Заполнить поле email: {email}")
