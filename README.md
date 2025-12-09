@@ -161,12 +161,13 @@ gradle clean test
 
 <img alt="Allure" height="25" src="images/logo/Allure.svg" width="25"/> Allure-отчет:
 <p align="center"> <img title="Allure Overview Dashboard" src="images/screen/allure_overview.png" width="850"> </p>
-###Главная страница отчета:
+
+### Главная страница отчета:
 Overview: Общая статистика по прогону (графики, диаграммы).
 
 Suites: Группировка тестов по тестовым наборам.
 
 Behaviors: Группировка по функциональным блокам (Epic, Feature, Story).
 
-<p align="center"> <img title="Allure Tests" src="images/screen/allure_behaviors.png" width="850"> </p>
+<p align="center"> <img title="Allure Tests" src="images/screen/allureResults.png" width="850"> </p>
 
