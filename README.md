@@ -154,5 +154,5 @@ gradle clean test
 После завершения сборки, бот созданный в <code>Telegram</code>, автоматически обрабатывает и отправляет сообщение с результатом.
 
 <p align="center">
-<img width="70%" title="Telegram Notifications" src="media/screens/Bot.png">
+<img width="40%" title="Telegram Notifications" src="media/screens/Bot.png">
 </p>
