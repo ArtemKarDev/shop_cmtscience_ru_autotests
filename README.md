@@ -1,8 +1,8 @@
 <p align="center">
-Проект автоматизации тестирования  
+<b>Проект автоматизации тестирования  </b>
 </p>
 <p align="center">
-интернет-магазина CMT Science
+<b>интернет-магазина CMT Science</b>
 </p>
 <p align="center">
 <img title="CMT Science" src="media/logo/logo.gif">
