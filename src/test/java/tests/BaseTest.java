@@ -25,6 +25,12 @@ public class BaseTest {
         Configuration.baseUrl = "https://cmtscience.ru";
         Configuration.pageLoadStrategy = "eager";
         Configuration.remote = System.getProperty("remote");
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.of(
+                    "enableVNC", true,
+                    "enableVideo", true
+            ));
+        Configuration.browserCapabilities = capabilities;
 
 //        boolean isJenkins = System.getenv("JENKINS_HOME") != null;
 //
