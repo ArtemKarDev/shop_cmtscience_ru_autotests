@@ -1,4 +1,4 @@
-## <title="CMT Science" width="4%"/> Проект автоматизации тестирования интернет-магазина CMT Science
+# Проект автоматизации тестирования интернет-магазина CMT Science
 <p align="center">
 <img title="CMT Science" src="media/logo/logo.gif">
 </p>
