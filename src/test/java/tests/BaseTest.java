@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
