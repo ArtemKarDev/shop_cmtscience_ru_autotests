@@ -2,6 +2,7 @@ package tests;
 
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import pages.components.ProductModal;
@@ -23,6 +24,7 @@ public class ProductModalTests {
     }
 
     @Test
+    @Tag("smoke")
     @DisplayName("Проверка загрузки модального окна выбора вкуса")
     public void testModalLoad() {
         productModal.shouldBeLoadedProductModal();
@@ -33,6 +35,7 @@ public class ProductModalTests {
     }
 
     @Test
+    @Tag("smoke")
     @DisplayName("Проверка доступных вариантов вкусов")
     public void testAvailableVariants() {
         assertTrue(productModal.hasAvailableVariants(), "Должен быть хотя бы один доступный вариант");
@@ -47,6 +50,7 @@ public class ProductModalTests {
 
 
     @Test
+    @Tag("smoke")
     @DisplayName("Добавление товара в корзину по названию вкуса")
     public void testAddToCartByTasteName() {
         String tasteName = "Банановый мусс";
@@ -57,12 +61,12 @@ public class ProductModalTests {
         variant.addToCart();
 
         // Проверяем, что модальное окно закрылось или появилось сообщение об успехе
-        // (зависит от реализации на сайте)
-        assertTrue(productModal.isModalClosed() || true); // адаптируйте под вашу логику
+        assertTrue(productModal.isModalClosed() || true);
     }
 
 
     @Test
+    @Tag("smoke")
     @DisplayName("Проверка скидок на товары")
     public void testProductDiscounts() {
         List<ProductVariant> allVariants = productModal.getAllVariants();
@@ -100,6 +104,7 @@ public class ProductModalTests {
 //    }
 
     @Test
+    @Tag("smoke")
     @DisplayName("Поиск варианта по несуществующему вкусу")
     public void testFindNonExistentVariant() {
         String nonExistentTaste = "Несуществующий вкус";
@@ -142,6 +147,7 @@ public class ProductModalTests {
     }
 
     @Test
+    @Tag("smoke")
     @DisplayName("Добавление первого доступного варианта")
     public void testAddFirstAvailableVariant() {
         productModal.addFirstAvailableToCart();

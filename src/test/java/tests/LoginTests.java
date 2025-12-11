@@ -6,12 +6,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.CatalogPage;
 import pages.LoginModalForm;
-import pages.components.FooterContainer;
 import pages.components.HeaderContainer;
 
 
 
-public class LoginTests extends TestBase{
+public class LoginTests extends BaseTest {
 
     private CatalogPage catalogPage;
     private LoginModalForm loginModalForm;

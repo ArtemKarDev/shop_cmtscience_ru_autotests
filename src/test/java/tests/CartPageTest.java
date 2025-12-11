@@ -1,6 +1,6 @@
 package tests;
 
-public class CartPageTest extends TestBase{
+public class CartPageTest extends BaseTest {
 
 
 

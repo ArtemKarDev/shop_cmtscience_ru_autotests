@@ -4,7 +4,6 @@ import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,7 +17,7 @@ import pages.components.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class CatalogPageTests extends TestBase{
+public class CatalogPageTests extends BaseTest {
 
     private CatalogPage catalogPage;
     private ProductPage productPage;
