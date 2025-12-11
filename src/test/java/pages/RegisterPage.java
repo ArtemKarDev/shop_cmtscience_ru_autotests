@@ -10,19 +10,20 @@ import static com.codeborne.selenide.Selenide.open;
 public class RegisterPage {
 
     private final SelenideElement
-            firstNameInput = $("#firstName"),
-            lastNameInput = $("#lastName"),
+            firstNameInput = $("#firstname"),
+            lastNameInput = $("#lastname"),
+            patronymicInput = $("#patronymic"),
             emailInput = $("#email"),
             passwordInput = $("#password"),
             passwordConfirmInput = $("#password-confirm"),
-            submitButton = $("#submit");
+            submitButton = $("button.btn__def[type=\"submit\"]"),
+            captchaError = $("#captcha-container + span.help-block strong");
+
 
 
     @Step("Открыть страницу регистрационной формы")
     public RegisterPage openRegisterPage() {
         open("/register");
-        //executeJavaScript("$('#fixban').remove()");
-        //executeJavaScript("$('footer').remove()");
         $(".common-form").shouldHave(text("Регистрация"));
         return this;
     }
@@ -36,6 +37,11 @@ public class RegisterPage {
     @Step("Вввести фамилию пользователя {value}.")
     public RegisterPage setLastName(String value) {
         lastNameInput.sendKeys(value);
+        return this;
+    }
+    @Step("Вввести Отчество пользователя {value}.")
+    public RegisterPage setPatronymic(String value) {
+        patronymicInput.sendKeys(value);
         return this;
     }
 
@@ -62,13 +68,13 @@ public class RegisterPage {
         return this;
     }
 
-//    @Step("Проверить, что введенные данные {value} отображаются в странице кабинета {key}.")
-//    public RegisterPage checkResult(String key, String value) {
-//        modalFormComponent.checkModalForm(key, value);
-//
-//        return this;
-//
-
-
-
+    @Step("Проверить, что появилось сообщение об ошибке Captcha error.")
+    public RegisterPage checkCaptchaError() {
+        captchaError.scrollTo();
+        if (captchaError.isDisplayed()) {
+            return this;
+        } else {
+            throw new AssertionError("Captcha error is not displayed");
+        }
+    }
 }

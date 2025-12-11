@@ -30,6 +30,7 @@ public class BaseTest {
                     "enableVideo", true
             ));
         Configuration.browserCapabilities = capabilities;
+        Configuration.headless = false;
 
 //        boolean isJenkins = System.getenv("JENKINS_HOME") != null;
 //

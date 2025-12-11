@@ -9,9 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import pages.CartPage;
 import pages.CatalogPage;
-import pages.ProductPage;
 import pages.components.*;
 
 import java.util.function.Consumer;
@@ -20,18 +18,12 @@ import java.util.stream.Stream;
 public class CatalogPageTests extends BaseTest {
 
     private CatalogPage catalogPage;
-    private ProductPage productPage;
-    private ProductModal productModal;
-    private ProductVariant productVariant;
     private HeaderContainer header;
-    private FooterContainer footer;
-    private CartPage cartPage;
+
     @BeforeEach
     void setUp() {
         catalogPage = new CatalogPage();
-        catalogPage.openCatalogPage();
         header = new HeaderContainer();
-        footer = new FooterContainer();
     }
 
     record ProductFilterTestParams(String productName, Consumer<CatalogPage> filterAction) {}
@@ -52,7 +44,7 @@ public class CatalogPageTests extends BaseTest {
     @Owner("KarlashovArtem")
     @Severity(SeverityLevel.BLOCKER)
     @Tag("smoke")
-    @DisplayName("Выбор товара по наименованию и проверка данных")
+    @DisplayName("Выбор товара по наименованию {productName} и проверка данных")
     public void testFindProductByNameAndVerifyData(String productName, String price){
         catalogPage.openCatalogPage()
                 .findProductCardByPartialName(productName)
@@ -63,7 +55,7 @@ public class CatalogPageTests extends BaseTest {
     @ParameterizedTest(name = "Товар с названием: {0}")
     @ValueSource(strings = {"Биотин", "Креатин", "Протеин"})
     @Tag("smoke")
-    @DisplayName("Добавление {} в корзину через модальное окно выбора вкуса")
+    @DisplayName("Добавление {partialProductName} в корзину через модальное окно выбора вкуса")
     public void testAddMultipleProductsToBasket(String partialProductName) {
         catalogPage = catalogPage.openCatalogPage();
 
@@ -110,7 +102,6 @@ public class CatalogPageTests extends BaseTest {
                 .findProductCardByPartialName(productName)
                 .goToProductPage()
                 .checkProductTitle(productName);
-
     }
 
 

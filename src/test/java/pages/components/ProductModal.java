@@ -14,7 +14,6 @@ public class ProductModal {
             modalTitle = $("#mfp-product-title"),
             modalCloseButton = $(".mfp-close");
 
-
     private final ElementsCollection desktopTableRows = $$("#to-basket-popup-table .tr-bot-items");
 
 
@@ -32,9 +31,7 @@ public class ProductModal {
         return modalTitle.getText();
     }
 
-    // Методы работы с вариантами товара
     public List<ProductVariant> getAllVariants() {
-        // Используем десктопную версию по умолчанию
         return desktopTableRows.stream()
                 .map(ProductVariant::new)
                 .collect(Collectors.toList());
@@ -57,11 +54,6 @@ public class ProductModal {
         modalCloseButton.click();
     }
 
-    public void addToCartByTaste(String tasteName) {
-        ProductVariant variant = findVariantByTaste(tasteName);
-        variant.addToCart();
-    }
-
     public ProductVariant addFirstAvailableToCart() {
         ProductVariant availableVariant = getAvailableVariants().stream()
                 .findFirst()
@@ -76,29 +68,6 @@ public class ProductModal {
 
     public int getTotalVariantsCount() {
         return getAllVariants().size();
-    }
-
-    public int getAvailableVariantsCount() {
-        return getAvailableVariants().size();
-    }
-
-
-    public List<Double> getAllPrices() {
-        return getAllVariants().stream()
-                .map(ProductVariant::getCurrentPrice)
-                .collect(Collectors.toList());
-    }
-
-    public double getMinPrice() {
-        return getAllPrices().stream()
-                .min(Double::compare)
-                .orElse(0.0);
-    }
-
-    public double getMaxPrice() {
-        return getAllPrices().stream()
-                .max(Double::compare)
-                .orElse(0.0);
     }
 
     public void waitForModalToClose() {
