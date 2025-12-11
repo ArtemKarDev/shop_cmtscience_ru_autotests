@@ -5,7 +5,7 @@
 <b>интернет-магазина CMT Science</b>
 </p>
 <p align="center">
-<img title="CMT Science" src="media/logo/logo.gif">
+<a href="https://cmtscience.ru/"><img title="CMT Science" src="media/logo/logo.gif"></a>
 </p>
 
 
