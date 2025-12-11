@@ -1,4 +1,12 @@
+## <img src="media/logo/logo.gif" title="CMT Science" width="4%"/> Проект автоматизации тестирования интернет-магазина CMT Science
+<p align="center">
+<img title="CMT Science" src="media/logo/logo.gif">
+</p>
+
 # Проект автоматизации тестирования интернет-магазина CMT Science
+
+
+
 
 > Автоматизированное тестирование функционала [магазина спортивного питания](https://cmtscience.ru/catalog) CMT Science.
 > Проект охватывает ключевые пользовательские сценарии, включая работу с каталогом, корзиной, фильтрами и поиском.
