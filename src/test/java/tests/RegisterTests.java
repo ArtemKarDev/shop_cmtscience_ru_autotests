@@ -1,4 +1,4 @@
-﻿package tests;
+package tests;
 
 import pages.components.FooterContainer;
 import pages.components.HeaderContainer;
