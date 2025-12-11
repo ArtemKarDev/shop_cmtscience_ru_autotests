@@ -20,8 +20,9 @@ public class RegisterTests extends BaseTest {
                 .setEmail("ivan.ivanov1@example.com")
                 .setPassword("Password123")
                 .setPasswordConfirm("Password123")
-                .submitClick()
-                .checkCaptchaError();
+                .submitClick();
+
+        registerPage.checkCaptchaError();
     }
 
 
