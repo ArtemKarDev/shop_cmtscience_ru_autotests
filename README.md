@@ -1,4 +1,9 @@
-# Проект автоматизации тестирования интернет-магазина CMT Science
+<p align="center">
+Проект автоматизации тестирования  
+</p>
+<p align="center">
+интернет-магазина CMT Science
+</p>
 <p align="center">
 <img title="CMT Science" src="media/logo/logo.gif">
 </p>
